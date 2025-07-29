@@ -19,6 +19,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     } */
     // Simulación de datos de compra
 
+
     const productos = [
       { nombre: 'Producto A', cantidad: 2, precio: 10 },
       { nombre: 'Producto B', cantidad: 1, precio: 25 }
@@ -53,7 +54,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     };
 
     let y = height - 50;
-    drawText('Resumen de compra::', y);
+    drawText('Resumen de compra:', y);
     y -= 30;
 
     productos.forEach((producto:any) => {
