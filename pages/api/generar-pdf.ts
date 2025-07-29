@@ -36,7 +36,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { width, height } = page.getSize();
 
 
-    const image = 'https://images.samsung.com/uk/smartphones/galaxy-z-fold7/images/galaxy-z-fold7-features-formfactor-on.png';
+   /*  const image = 'https://images.samsung.com/uk/smartphones/galaxy-z-fold7/images/galaxy-z-fold7-features-formfactor-on.png';
     const imageBytes = await fetch(image).then((res) => res.arrayBuffer());
 
     const renderimage =  await pdfDoc.embedPng(imageBytes);
@@ -47,7 +47,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         y: page.getHeight() / 2 - pngDims.height,
         width: pngDims.width,
         height: pngDims.height,
-    }) 
+    })  */
 
     const drawText = (text: string, y: number) => {
       page.drawText(text, { x: 200, y, size: 16, font, color: rgb(0, 0.53, 0.71) });
