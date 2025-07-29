@@ -7,7 +7,7 @@ import QRCode from 'qrcode';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
 
-   if (req.method !== 'POST') {
+ /*   if (req.method !== 'POST') {
      return res.status(405).json({ error: 'Método no permitido' });
    }
 
@@ -16,10 +16,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     if (!Array.isArray(products)) {
      return res.status(400).json({ error: 'Formato inválido' });
-    }
+    } */
     // Simulación de datos de compra
 
-    const total = products.reduce((sum:any, p:any) => sum + p.cantidad * p.precio, 0);
+    const productos = [
+      { nombre: 'Producto A', cantidad: 2, precio: 10 },
+      { nombre: 'Producto B', cantidad: 1, precio: 25 }
+    ];
+
+    const total = productos.reduce((sum:any, p:any) => sum + p.cantidad * p.precio, 0);
 
     const qrTexto = 'https://generar-factura-8w01umyft-joses-projects-f0ad7e56.vercel.app/api/generar-pdf'; // Aquí pondrás luego el link real
     const qrImage = await QRCode.toDataURL(qrTexto);
@@ -51,7 +56,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     drawText('Resumen de compra::', y);
     y -= 30;
 
-    products.forEach((producto:any) => {
+    productos.forEach((producto:any) => {
       drawText(`- ${producto.nombre} x${producto.cantidad} - $${producto.precio}`, y);
       y -= 20;
     });
