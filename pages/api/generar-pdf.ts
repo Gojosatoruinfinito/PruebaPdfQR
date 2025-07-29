@@ -61,7 +61,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     };
 
     let y = height - 50;
-    drawText('Resumen de compra:', y);
+    drawText('Resumen de compra*8987', y);
     y -= 30;
 
     productos.forEach((producto:any) => {
