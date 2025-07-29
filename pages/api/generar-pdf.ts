@@ -11,7 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
      return res.status(405).json({ error: 'Método no permitido' });
    }
 
-   
+
     const products = req.body.products;
 
     if (!Array.isArray(products)) {
@@ -48,7 +48,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     };
 
     let y = height - 50;
-    drawText('Resumen de compra:', y);
+    drawText('Resumen de compra::', y);
     y -= 30;
 
     products.forEach((producto:any) => {
