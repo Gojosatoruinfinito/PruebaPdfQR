@@ -4,6 +4,9 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 import QRCode from 'qrcode';
 
+console.log("Versión nueva 🟩");
+
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
 
