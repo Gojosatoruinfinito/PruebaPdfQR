@@ -7,6 +7,13 @@ import QRCode from 'qrcode';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
 
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+    res.setHeader('Surrogate-Control', 'no-store');
+
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'inline; filename="factura.pdf"');
  /*   if (req.method !== 'POST') {
      return res.status(405).json({ error: 'Método no permitido' });
    }
