@@ -32,50 +32,69 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
     const { width, height } = page.getSize();
 
-    let y = height - 50;
-    page.drawText('Resumen de compra:', {
-      x: 200,
-      y,
-      size: 16,
-      font,
-      color: rgb(0, 0.53, 0.71),
-    });
-    y -= 30;
+    const fechaActual = new Date().toLocaleDateString('es-ES', {
+  day: '2-digit', month: '2-digit', year: 'numeric'
+});
 
-    for (const producto of products) {
-      const { nombre, cantidad, precio, imagen } = producto;
+// Encabezado
+page.drawText('Factura de Compra', {
+  x: 50,
+  y: height - 40,
+  size: 20,
+  font,
+  color: rgb(0.2, 0.2, 0.6),
+  // puedes usar Helvetica-Bold si la embebes
+});
 
-      page.drawText(`- ${nombre} x${cantidad} - $${precio}`, {
-        x: 50,
-        y,
-        size: 14,
-        font,
-        color: rgb(0.2, 0.2, 0.2),
-      });
+// Fecha en esquina superior derecha
+page.drawText(`Fecha: ${fechaActual}`, {
+  x: width - 150,
+  y: height - 40,
+  size: 12,
+  font,
+  color: rgb(0.2, 0.2, 0.2),
+});
 
-      // ↓ Cargar imagen webp y convertir a PNG
-      const webpBuffer = await fetch(imagen).then(res => res.arrayBuffer());
-      const pngBuffer = await sharp(Buffer.from(webpBuffer)).png().toBuffer();
-      const img = await pdfDoc.embedPng(pngBuffer);
-      const dims = img.scale(0.2);
+let y = height - 80;
 
-      page.drawImage(img, {
-        x: width - dims.width - 50,
-        y: y - dims.height + 10,
-        width: dims.width,
-        height: dims.height,
-      });
+// Títulos de columnas
+page.drawText('Producto', { x: 50, y, size: 14, font, color: rgb(0, 0, 0) });
+page.drawText('Cant.',   { x: 250, y, size: 14, font, color: rgb(0, 0, 0) });
+page.drawText('Precio',  { x: 310, y, size: 14, font, color: rgb(0, 0, 0) });
+page.drawText('Imagen',  { x: 400, y, size: 14, font, color: rgb(0, 0, 0) });
 
-      y -= 70; // espacio entre productos
-    }
+y -= 25;
 
-    page.drawText(`Total: $${total}`, {
-      x: 50,
-      y: y - 10,
-      size: 16,
-      font,
-      color: rgb(0, 0.53, 0.71),
-    });
+for (const producto of products) {
+  const { nombre, cantidad, precio, imagen } = producto;
+
+  page.drawText(nombre,  { x: 50, y, size: 12, font });
+  page.drawText(String(cantidad), { x: 260, y, size: 12, font });
+  page.drawText(`$${precio}`, { x: 310, y, size: 12, font });
+
+  const webpBuffer = await fetch(imagen).then(res => res.arrayBuffer());
+  const pngBuffer = await sharp(Buffer.from(webpBuffer)).png().toBuffer();
+  const img = await pdfDoc.embedPng(pngBuffer);
+  const dims = img.scale(0.1);
+
+  page.drawImage(img, {
+    x: 400,
+    y: y - dims.height + 5,
+    width: dims.width,
+    height: dims.height,
+  });
+
+  y -= 60;
+}
+
+// Total destacado
+page.drawText(`TOTAL: $${total}`, {
+  x: 50,
+  y,
+  size: 16,
+  font,
+  color: rgb(0, 0.53, 0.71),
+});
 
     // Código QR
     const qrImageBytes = Buffer.from(qrImage.split(',')[1], 'base64');
