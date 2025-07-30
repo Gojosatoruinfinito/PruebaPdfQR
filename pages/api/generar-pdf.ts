@@ -10,6 +10,9 @@ console.log("Versión con POST 🟧");
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
+    res.setHeader('Access-Control-Allow-Origin', '*'); // Permitir todos los orígenes (solo para pruebas)
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+
     if (req.method !== 'POST') {
       return res.status(405).json({ error: 'Método no permitido' });
     }
