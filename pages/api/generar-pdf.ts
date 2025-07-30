@@ -60,11 +60,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     })  */
 
     const drawText = (text: string, y: number) => {
-      page.drawText(text, { x: 200, y, size: 16, font, color: rgb(255, 99, 71) });
+      page.drawText(text, { x: 200, y, size: 16, font, color: rgb(0, 0.53, 0.71) });
     };
 
     let y = height - 50;
-    drawText('Resumen de compras:', y);
+    drawText('Resumen de compra:', y);
     y -= 30;
 
     productos.forEach((producto:any) => {
