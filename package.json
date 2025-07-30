@@ -10,10 +10,12 @@
   },
   "dependencies": {
     "next": "15.4.4",
+    "node-fetch": "^3.3.2",
     "pdf-lib": "^1.17.1",
     "qrcode": "^1.5.4",
     "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "react-dom": "19.1.0",
+    "sharp": "^0.34.3"
   },
   "devDependencies": {
     "@types/node": "^20",
