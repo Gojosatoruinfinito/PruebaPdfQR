@@ -103,8 +103,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Respondemos con la URL pública del PDF
     return res.status(200).json({ url });
 
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Error al generar el PDF' });
-  }
+ } catch (error: any) {
+  console.error('Error interno:', error);
+  res.status(500).json({ error: error.message || 'Error desconocido' });
+}
 }
