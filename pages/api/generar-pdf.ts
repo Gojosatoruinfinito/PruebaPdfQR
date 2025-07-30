@@ -60,7 +60,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     })  */
 
     const drawText = (text: string, y: number) => {
-      page.drawText(text, { x: 200, y, size: 16, font, color: rgb(0, 0.53, 0.71) });
+      page.drawText(text, { x: 200, y, size: 16, font, color: rgb(0, 255, 0) });
     };
 
     let y = height - 50;
