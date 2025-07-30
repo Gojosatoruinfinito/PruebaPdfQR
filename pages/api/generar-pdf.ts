@@ -96,7 +96,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const { url } = await put(uniqueName, buffer, {
       access: 'public',
-      token: process.env.VERCEL_BLOB_READ_WRITE_TOKEN!,
+      token: process.env.VERCEL_BLOB_READ_WRITE_TOKEN,
       contentType: 'application/pdf',
     });
 
