@@ -94,7 +94,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const buffer = Buffer.from(pdfBytes);
     const uniqueName = `factura-${crypto.randomUUID()}.pdf`;
 
-    const token = process.env.VERCEL_BLOB_READ_WRITE_TOKEN;
+    const token = process.env.BLOB_READ_WRITE_TOKEN;
     if (!token) {
      throw new Error('Token de Vercel Blob no configurado');
     }
@@ -110,6 +110,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
  } catch (error: any) {
   console.error('Error interno:', error);
-  res.status(500).json({ error: error.message, test: process.env.VERCEL_BLOB_READ_WRITE_TOKEN });
+  res.status(500).json({ error: error.message, test: process.env.BLOB_READ_WRITE_TOKEN });
 }
 }
