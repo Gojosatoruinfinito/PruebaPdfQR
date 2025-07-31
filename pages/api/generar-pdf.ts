@@ -58,21 +58,36 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       page.drawText(String(cantidad), { x: 260, y, size: 12, font });
       page.drawText(`$${precio}`, { x: 310, y, size: 12, font });
 
-      try {
-        const webpBuffer = await fetch(imagen).then(res => res.arrayBuffer());
-        const pngBuffer = await sharp(Buffer.from(webpBuffer)).png().toBuffer();
-        const img = await pdfDoc.embedPng(pngBuffer);
-        const dims = img.scale(0.1);
+        try {
+            const response = await fetch(imagen);
+            const arrayBuffer = await response.arrayBuffer();
+            const buffer = Buffer.from(arrayBuffer);
+            const contentType = response.headers.get("content-type") || "";
 
-        page.drawImage(img, {
-          x: 400,
-          y: y - dims.height + 5,
-          width: dims.width,
-          height: dims.height,
-        });
-      } catch (error) {
-        console.warn(`No se pudo cargar la imagen para ${nombre}`);
-      }
+            let img;
+            if (contentType.includes("image/webp")) {
+                // Convertimos .webp a .png
+                const pngBuffer = await sharp(buffer).png().toBuffer();
+                img = await pdfDoc.embedPng(pngBuffer);
+            } else if (contentType.includes("image/png")) {
+                img = await pdfDoc.embedPng(buffer);
+            } else if (contentType.includes("image/jpeg") || contentType.includes("image/jpg")) {
+                img = await pdfDoc.embedJpg(buffer);
+            } else {
+                throw new Error(`Formato de imagen no soportado: ${contentType}`);
+            }
+
+            const dims = img.scale(0.1);
+            page.drawImage(img, {
+                x: 400,
+                y: y - dims.height + 5,
+                width: dims.width,
+                height: dims.height,
+            });
+
+        } catch (error) {
+            console.warn(`No se pudo cargar la imagen para ${nombre}`, error);
+        }
 
       y -= 60;
     }
