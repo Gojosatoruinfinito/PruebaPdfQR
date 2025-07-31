@@ -77,7 +77,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 throw new Error(`Formato de imagen no soportado: ${contentType}`);
             }
 
-            const dims = img.scale(0.1);
+            const dims = img.scale(0.2);
             page.drawImage(img, {
                 x: 400,
                 y: y - dims.height + 5,
