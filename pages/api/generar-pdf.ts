@@ -94,9 +94,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const buffer = Buffer.from(pdfBytes);
     const uniqueName = `factura-${crypto.randomUUID()}.pdf`;
 
+    const token = process.env.VERCEL_BLOB_READ_WRITE_TOKEN;
+    if (!token) {
+     throw new Error('Token de Vercel Blob no configurado');
+    }
+
     const { url } = await put(uniqueName, buffer, {
       access: 'public',
-      token: process.env.VERCEL_BLOB_READ_WRITE_TOKEN,
+      token: token,
       contentType: 'application/pdf',
     });
 
