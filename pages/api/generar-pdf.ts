@@ -58,7 +58,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         page.drawText(producto.producto, { x: 50, y, size: 12, font });
         page.drawText(String(producto.cantidad), { x: 230, y, size: 12, font });
         page.drawText(`$${producto.preciounitario.toFixed(2)}`, { x: 290, y, size: 12, font });
-        page.drawText(`$${producto.costo.toFixed(2)}`, { x: 360, y, size: 12, font });
+        page.drawText(`$${producto.Costo.toFixed(2)}`, { x: 360, y, size: 12, font });
+
 
         try {
             const response = await fetch(imagen);
