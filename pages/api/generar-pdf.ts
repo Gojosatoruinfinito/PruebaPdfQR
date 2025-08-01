@@ -45,18 +45,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     let y = height - 80;
     page.drawText('Producto', { x: 50, y, size: 14, font, color: rgb(0, 0, 0) });
-    page.drawText('Cant.',   { x: 250, y, size: 14, font, color: rgb(0, 0, 0) });
-    page.drawText('Precio',  { x: 310, y, size: 14, font, color: rgb(0, 0, 0) });
-    page.drawText('Imagen',  { x: 400, y, size: 14, font, color: rgb(0, 0, 0) });
+    page.drawText('Costo',    { x: 200, y, size: 14, font, color: rgb(0, 0, 0) });
+    page.drawText('Cant.',    { x: 270, y, size: 14, font, color: rgb(0, 0, 0) });
+    page.drawText('Precio',   { x: 330, y, size: 14, font, color: rgb(0, 0, 0) });
+    page.drawText('Imagen',   { x: 430, y, size: 14, font, color: rgb(0, 0, 0) });
 
     y -= 25;
 
     for (const producto of products) {
-      const { nombre, cantidad, precio, imagen } = producto;
-
-      page.drawText(nombre, { x: 50, y, size: 12, font });
-      page.drawText(String(cantidad), { x: 260, y, size: 12, font });
-      page.drawText(`$${precio}`, { x: 310, y, size: 12, font });
+      const { producto: nombre, cantidad, preciounitario: precio, Image: imagen, costo } = producto;
+      
+        page.drawText(nombre,         { x: 50, y, size: 12, font });
+        page.drawText(`$${costo}`,    { x: 200, y, size: 12, font });
+        page.drawText(String(cantidad), { x: 270, y, size: 12, font });
+        page.drawText(`$${precio}`,   { x: 330, y, size: 12, font });
 
         try {
             const response = await fetch(imagen);
