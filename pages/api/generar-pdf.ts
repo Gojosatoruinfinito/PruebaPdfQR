@@ -125,6 +125,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
  } catch (error: any) {
   console.error('Error interno:', error);
-  res.status(500).json({ error: error.message, test: process.env.BLOB_READ_WRITE_TOKEN });
+  res.status(500).json({ error: error.message});
 }
 }
