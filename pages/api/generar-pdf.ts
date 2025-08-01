@@ -45,20 +45,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     let y = height - 80;
     page.drawText('Producto', { x: 50, y, size: 14, font, color: rgb(0, 0, 0) });
-    page.drawText('Costo',    { x: 200, y, size: 14, font, color: rgb(0, 0, 0) });
-    page.drawText('Cant.',    { x: 270, y, size: 14, font, color: rgb(0, 0, 0) });
-    page.drawText('Precio',   { x: 330, y, size: 14, font, color: rgb(0, 0, 0) });
-    page.drawText('Imagen',   { x: 430, y, size: 14, font, color: rgb(0, 0, 0) });
+    page.drawText('Cant.',   { x: 220, y, size: 14, font, color: rgb(0, 0, 0) });
+    page.drawText('Precio',  { x: 280, y, size: 14, font, color: rgb(0, 0, 0) });
+    page.drawText('Costo',   { x: 350, y, size: 14, font, color: rgb(0, 0, 0) });
+    page.drawText('Imagen',  { x: 420, y, size: 14, font, color: rgb(0, 0, 0) });
 
     y -= 25;
 
     for (const producto of products) {
       const { producto: nombre, cantidad, preciounitario: precio, Image: imagen, costo } = producto;
-      
-        page.drawText(nombre,         { x: 50, y, size: 12, font });
-        page.drawText(`$${costo}`,    { x: 200, y, size: 12, font });
-        page.drawText(String(cantidad), { x: 270, y, size: 12, font });
-        page.drawText(`$${precio}`,   { x: 330, y, size: 12, font });
+
+        page.drawText(producto.producto, { x: 50, y, size: 12, font });
+        page.drawText(String(producto.cantidad), { x: 230, y, size: 12, font });
+        page.drawText(`$${producto.preciounitario.toFixed(2)}`, { x: 290, y, size: 12, font });
+        page.drawText(`$${producto.costo.toFixed(2)}`, { x: 360, y, size: 12, font });
 
         try {
             const response = await fetch(imagen);
@@ -79,10 +79,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 throw new Error(`Formato de imagen no soportado: ${contentType}`);
             }
 
-            const dims = img.scale(0.2);
-            page.drawImage(img, {
-                x: 400,
-                y: y - dims.height + 5,
+            const dims = img.scale(0.1);
+                page.drawImage(img, {
+                x: 420,
+                y: y - dims.height + 10,
                 width: dims.width,
                 height: dims.height,
             });
@@ -91,7 +91,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             console.warn(`No se pudo cargar la imagen para ${nombre}`, error);
         }
 
-      y -= 60;
+      y -= 70;
     }
 
     page.drawText(`TOTAL: $${total}`, {
