@@ -67,7 +67,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     page.drawText('Imagen', { x: 420, y: headerY, size: 14, font, color: rgb(1, 1, 1) });
 
      let y = headerY - 80;
-     const rowHeight = 70;
+     const rowHeight = 80;
 
     for (const producto of products) {
       const { producto: nombre, cantidad, preciounitario: precio, Image: imagen, Costo } = producto;
