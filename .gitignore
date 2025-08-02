@@ -12,6 +12,8 @@
 
 # testing
 /coverage
+pages/api/generar-pdf-test.ts
+
 
 # next.js
 /.next/
