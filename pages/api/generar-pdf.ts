@@ -58,7 +58,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const headerY = height - 120;
     const colorFondo = rgb(0.2, 0.2, 0.6);
-    page.drawRectangle({ x: 50, y: headerY - 20, width: 500, height: 25, color: colorFondo });
+    page.drawRectangle({ x: 50, y: headerY - 10, width: 500, height: 25, color: colorFondo });
 
     page.drawText('Producto', { x: 60, y: headerY, size: 14, font, color: rgb(1, 1, 1) });
     page.drawText('Cant.', { x: 220, y: headerY, size: 14, font, color: rgb(1, 1, 1) });
@@ -95,7 +95,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           throw new Error(`Formato de imagen no soportado: ${contentType}`);
         }
 
-        const dims = img.scale(0.2);
+        const dims = img.scale(0.1);
         const imageY = y + (rowHeight / 2 - dims.height / 2) - 5;
 
         page.drawImage(img, {
