@@ -23,9 +23,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(400).json({ error: 'Formato de datos incorrecto' });
     }
 
-    const qrTexto = 'https://generar-factura-app.vercel.app/api/generar-pdf';
-    const qrImage = await QRCode.toDataURL(qrTexto);
-
     const pdfDoc = await PDFDocument.create();
     const page = pdfDoc.addPage([600, 750]);
     const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
@@ -118,14 +115,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       x: 60, y, size: 16, font, color: rgb(0.2, 0.2, 0.6),
     });
 
-    const qrImageBytes = Buffer.from(qrImage.split(',')[1], 'base64');
-    const qrImageEmbed = await pdfDoc.embedPng(qrImageBytes);
-    page.drawImage(qrImageEmbed, {
-      x: width - 150,
-      y: 50,
-      width: 120,
-      height: 120,
-    });
 
     page.drawText('¡Gracias por su compra!', {
       x: 60,
@@ -149,6 +138,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       token,
       contentType: 'application/pdf',
     });
+
+    const qrTexto = url;
+    const qrImage = await QRCode.toDataURL(qrTexto);
+
+    const qrImageBytes = Buffer.from(qrImage.split(',')[1], 'base64');
+    const qrImageEmbed = await pdfDoc.embedPng(qrImageBytes);
+    page.drawImage(qrImageEmbed, {
+      x: width - 150,
+      y: 50,
+      width: 120,
+      height: 120,
+    });
+
 
     return res.status(200).json({ url });
 
