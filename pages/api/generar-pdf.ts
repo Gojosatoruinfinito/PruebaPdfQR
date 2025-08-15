@@ -23,7 +23,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(400).json({ error: 'Formato de datos incorrecto' });
     }
 
-    const namefile = `factura-${email}${crypto.randomUUID()}.pdf`;
+    const namefile = `factura-${email}-${crypto.randomUUID()}.pdf`;
 
     const qrTexto = namefile;
     const qrImage = await QRCode.toDataURL(qrTexto);
