@@ -32,10 +32,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const parts = blob.pathname.replace(".pdf", "").split("-");
         // parts[1] = email, parts[2] = total
         const total = parseFloat(parts[2]) || 0;
-
         return {
           URL: blob.url,
-          TIME: new Date(blob.uploadedAt).toLocaleString("es-ES"),
+          TIME: new Date(blob.uploadedAt).toLocaleString("es-ES", {
+            year: 'numeric',
+            month: 'numeric',
+            day: 'numeric'
+          }),
           COST: `$${total.toFixed(2)}`
         };
       })
