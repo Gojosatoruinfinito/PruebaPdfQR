@@ -34,6 +34,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const total = parseFloat(parts[2]) || 0;
         return {
           URL: blob.url,
+          SIZE: blob.size,
           TIME: new Date(blob.uploadedAt).toLocaleString("es-ES", {
             year: 'numeric',
             month: 'numeric',
