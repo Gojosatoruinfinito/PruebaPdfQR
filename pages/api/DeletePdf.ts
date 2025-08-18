@@ -17,7 +17,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       // Respuesta en JSON
       return res.status(200).json({ success: true, message: "Factura eliminada con éxito" });
     } catch (error: any) {
-      return res.status(500).json({ success: false, error: error.message });
+      return res.status(500).json({ success: req.body, error:  req.body });
     }
   } else {
     res.status(405).json({ success: false, error: "Método no permitido" });
