@@ -13,16 +13,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(400).json({ success: false, error: "No se envió la URL del archivo" });
     }
 
-    // Decodificamos en caso de que venga encodeada
     fileUrl = decodeURIComponent(fileUrl);
-
-    console.log("Borrando blob:", fileUrl);
+    console.log("Intentando eliminar:", fileUrl);
 
     await del(fileUrl);
 
-    return res.status(200).json({ success: true, message: "Factura eliminada con éxito" });
+    return res.status(200).json({
+      success: true,
+      message: "Factura eliminada con éxito",
+      fileUrl,
+    });
   } catch (error: any) {
     console.error("Error eliminando:", error.message);
-    return res.status(500).json({ success: false, error: error.message });
+    return res.status(500).json({
+      success: false,
+      error: error.message,
+    });
   }
 }
